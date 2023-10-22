@@ -1,4 +1,4 @@
-package engine;
+package a1_2101040066;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,24 +15,24 @@ public class Engine {
         int numberOfDocs = 0;
 
         if (directory.isDirectory()) {
-            File[] files = directory.listFiles();
+            File[] files = directory.listFiles(file -> file.getName().endsWith(".txt"));
 
             if (files != null) {
                 for (File file : files) {
                     try {
-                        System.out.println(file.getPath());
                         String content = new String(Files.readAllBytes(file.toPath()));
-                        docs.add(new Doc(content));
+                        Doc doc = new Doc(content);
+                        docs.add(doc);
                         numberOfDocs++;
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace(); // Handle the exception properly
                     }
                 }
-                System.out.println(numberOfDocs);
             }
         }
         return numberOfDocs;
     }
+
 
     public Doc[] getDocs() {
         return docs.toArray(new Doc[0]);
